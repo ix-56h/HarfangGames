@@ -8,12 +8,15 @@ def get_game(db: Session, game_id: int):
 
 
 def get_game_by_name(db: Session, name: str):
-    return db.query(games.Game).filter(games.Game.name == name).first()
+    search = "%{}%".format(name)
+    return db.query(games.Game).filter(games.Game.name.like(search)).first()
 
+def get_games_by_name(db: Session, name: str, skip: int = 0, limit: int = 100):
+    search = "%{}%".format(name)
+    return db.query(games.Game).filter(games.Game.name.like(search)).offset(skip).limit(limit).all()
 
 def get_games(db: Session, skip: int = 0, limit: int = 100):
     return db.query(games.Game).offset(skip).limit(limit).all()
-
 
 def create_game(db: Session, game: schemas.GameCreate):
     db_game = games.Game(**game.model_dump())
