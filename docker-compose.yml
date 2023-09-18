@@ -1,0 +1,32 @@
+version: '3.1'
+
+services:
+  backend:
+    build: backend/.
+    container_name: harfang_backend
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+    volumes:
+      - ./backend/app:/app
+    ports:
+      - "8080:80"
+    depends_on:
+      - postgres
+
+  postgres:
+    container_name: postgres_db_harfang
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      PGDATA: /data/postgres
+    volumes:
+       - ./postgres-db:/data/postgres
+    ports:
+      - "5432:5432"
+
+volumes:
+  postgres-db:
+    driver: local

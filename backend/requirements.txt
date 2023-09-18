@@ -1,0 +1,8 @@
+sqlalchemy
+psycopg2-binary
+fastapi[all]
+alembic
+pandas
+python-slugify
+python-jose[cryptography]
+passlib[bcrypt]
